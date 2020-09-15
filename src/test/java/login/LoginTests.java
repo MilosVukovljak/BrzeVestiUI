@@ -14,7 +14,6 @@ import pages.DashboardPage;
 import pages.LoginPage;
 
 public class LoginTests extends BaseTest{
-    boolean loggedIn = false;
 
     @Before
     public void setUp(){
@@ -36,13 +35,12 @@ public class LoginTests extends BaseTest{
         String actualUrl = driver.getCurrentUrl();        
          assertEquals("Url's does not match.", expectedURL, actualUrl);
          
-         DashboardPage dashboardPage = new DashboardPage(driver);
+         DashboardPage dashboardPage = new DashboardPage(driver, wait);
          String expectedPanelHeadingText = "Dashboard";
          String actualPanelHeadingText = dashboardPage.getPanelHeadingText();
          assertTrue("Failed - panel heading texts doesnt't match", expectedPanelHeadingText.equals(actualPanelHeadingText));
                  
          dashboardPage.logout();
-         
          //dashboardPage
         
     }

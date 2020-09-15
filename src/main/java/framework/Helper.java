@@ -12,4 +12,7 @@ public class Helper {
     public static String getRandomEmail(){
         return "milos" + getRandomInteger() + "@gmail.com";
     }
+    public static String getRandomUrl(){
+        return "www" + getRandomText() + ".com";
+    }
 }

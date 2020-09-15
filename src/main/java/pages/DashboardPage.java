@@ -2,10 +2,13 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class DashboardPage {
     private WebDriver driver;
-    private final By optionsDropDownLocator = By.className("dropdown-toggle");
+    private final WebDriverWait wait;
+    
+    private final By dropDownLogoutListLocator = By.className("dropdown-toggle");
     private final By logoutButtonLocator = By.xpath("//*[@id=\"app-navbar-collapse\"]/ul[2]/li/ul/li/a");
     private final By dashboardLinkLocator = By.xpath("//*[@id=\"app-navbar-collapse\"]/ul[1]/li[1]/a");
     private final By signaturesLinkLocator = By.linkText("Signatures");
@@ -15,13 +18,14 @@ public class DashboardPage {
     private final By sourcesLinkLocator = By.linkText("Sources");
     private final By panelHeading = By.className("panel-heading");
     
-    public DashboardPage(WebDriver driver){
+    public DashboardPage(WebDriver driver, WebDriverWait wait){
         this.driver = driver;
+        this.wait = wait;
     }
-    private void clickOnOptionsDropdown(){
-        driver.findElement(optionsDropDownLocator);
+    public void clickOnOptionsDropdown(){
+        driver.findElement(dropDownLogoutListLocator);
     }
-    private void clickOnLogoutButtonFromDropdown(){
+    public void clickOnLogoutButtonFromDropdown(){
      driver.findElement(logoutButtonLocator);
     }
     public void logout(){
@@ -31,24 +35,25 @@ public class DashboardPage {
    public void clickOnDashboardNavLink(){
        driver.findElement(dashboardLinkLocator).click();
    }
-   public void clickOnSignaturesNavLink(){
+   public SignaturesPage clickOnSignaturesNavLink(){
        driver.findElement(signaturesLinkLocator).click();
+       return new SignaturesPage(driver, wait);////******
    }
-   public SignaturesPage clickOnSignaturesNavLink2(){
-       driver.findElement(signaturesLinkLocator).click();
-       return new SignaturesPage(driver);////******
-   }
-   public void clickOnCategoriesNavLink(){
+   public CategoriesPage clickOnCategoriesNavLink(){
        driver.findElement(categoriesLinkLocator).click();
+       return new CategoriesPage(driver, wait);
    }
-   public void clickOnRegionsNavLink(){
+   public RegionsPage clickOnRegionsNavLink(){
        driver.findElement(regionsLinkLocator).click();
+       return new RegionsPage(driver, wait);
    }
-   public void clickOnPortalsNavLink(){
+   public PortalsPage clickOnPortalsNavLink(){
        driver.findElement(portalsLinkLocator).click();
+       return new PortalsPage(driver, wait);
    }
-   public void clickOnSourcesNavLink(){
+   public SourcesPage clickOnSourcesNavLink(){
        driver.findElement(sourcesLinkLocator).click();
+       return new SourcesPage(driver);
    }
    public String getPanelHeadingText(){
       return driver.findElement(panelHeading).getText();

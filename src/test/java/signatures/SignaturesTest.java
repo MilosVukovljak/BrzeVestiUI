@@ -1,13 +1,11 @@
-
-package dashboard;
+package signatures;
 
 import base.BaseTest;
 import org.junit.After;
-import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import pages.CategoriesPage;
 import pages.DashboardPage;
 import pages.LoginPage;
@@ -16,9 +14,8 @@ import pages.RegionsPage;
 import pages.SignaturesPage;
 import pages.SourcesPage;
 
-public class DashboardTest extends BaseTest {
-    
-    private static DashboardPage dashboardPage;
+public class SignaturesTest extends BaseTest{
+    private static SignaturesPage signaturesPage;
     
     @Before
     public void setUp() {
@@ -28,64 +25,57 @@ public class DashboardTest extends BaseTest {
         loginPage.enterPasswordOfValidUser();
         loginPage.clickLoginButton();
         
-        dashboardPage = new DashboardPage(driver, wait);
+        DashboardPage dashboardPage = new DashboardPage(driver, wait);
+        signaturesPage = dashboardPage.clickOnSignaturesNavLink();
     }
     
     @After
     public void tearDown() {
-        dashboardPage.clickOnOptionsDropdown();
-        dashboardPage.clickOnLogoutButtonFromDropdown();
-    }
-     
+        signaturesPage.logout();
+    } 
+    
     @Test
-    public void testDashboardLink(){  
-        dashboardPage.clickOnDashboardNavLink();
+    public void testDashboardLink(){
+        DashboardPage dashboardPage = signaturesPage.clickOnDashboardNavLink();
         
         String expectedUrl = "http://bvtest.school.cubes.rs/admin";
         String actualUrl = driver.getCurrentUrl();
         assertEquals("Url's doesnt' match", expectedUrl, actualUrl);
         
-        String expectedPanelHeadingText = "Dashboard";
-        String actualPanelHeadingText = dashboardPage.getPanelHeadingText();
+        String expectedDashboardPanelHeadingText = "Dashboard";
+        String actualDashboardPanelHeadingText = dashboardPage.getPanelHeadingText();
         
-         assertTrue("Failed - panel heading texts doesnt't match", expectedPanelHeadingText.equals(actualPanelHeadingText));
-         //expected result: user is on dashboard page           
+        assertTrue("Failed - panel heading texts doesn't match", actualDashboardPanelHeadingText.contains(expectedDashboardPanelHeadingText));
     }
     @Test
-    public void testSignaturesLink(){  
-        
-        SignaturesPage signaturesPage = dashboardPage.clickOnSignaturesNavLink();
+    public void testSignaturesLink(){
+        signaturesPage.clickOnSignaturesNavLink();
         
         String expectedUrl = "http://bvtest.school.cubes.rs/admin/signatures";
         String actualUrl = driver.getCurrentUrl();
         assertEquals("Url's doesnt' match", expectedUrl, actualUrl);
         
+        String expectedSignaturesPanelHeadingText = "Signatures";
+        String actualSignaturesPanelHeadingText = signaturesPage.getPanelHeadingText();
         
-        String expectedPanelHeadingText = "Signatures";
-        String actualPanelHeadingText = signaturesPage.getPanelHeadingText();
-        
-        assertTrue("Failed - panel heading texts doesnt't match", expectedPanelHeadingText.equals(actualPanelHeadingText));
-         //expected result: user is on signatures page
-        
+        assertTrue("Failed - panel heading texts doesn't match", actualSignaturesPanelHeadingText.contains(expectedSignaturesPanelHeadingText)); 
     }
     @Test
-    public void testCategoriesLink(){  
-        
-        CategoriesPage categoriesPage = dashboardPage.clickOnCategoriesNavLink();
+    public void testCategoriesLink(){
+        CategoriesPage categoriesPage = signaturesPage.clickOnCategoriesNavLink();
         
         String expectedUrl = "http://bvtest.school.cubes.rs/admin/categories";
         String actualUrl = driver.getCurrentUrl();
-        assertEquals("Url's doesnt' match", expectedUrl, actualUrl);
+        assertEquals("Url's doesn't match", expectedUrl, actualUrl);
         
-        String expectedPanelHeadingText = "Categories";
-        String actualPanelHeadingText = categoriesPage.getPanelHeadingText();
-        assertTrue("Failed - panel heading texts doesn't match", actualPanelHeadingText.contains(expectedPanelHeadingText));
-    //**
+        String expectedCategoriesPanelHeadingText = "Categories";
+        String actualCategoriesPanelHeadingText = categoriesPage.getPanelHeadingText();
+        
+        assertTrue("Failed - panel heading texts doesn't match", actualCategoriesPanelHeadingText.contains(expectedCategoriesPanelHeadingText));
     }
     @Test
     public void testRegionsLink(){
-        
-        RegionsPage regionsPage = dashboardPage.clickOnRegionsNavLink();
+        RegionsPage regionsPage = signaturesPage.clickOnRegionsNavLink();
         
         String expectedUrl = "http://bvtest.school.cubes.rs/admin/regions";
         String actualUrl = driver.getCurrentUrl();
@@ -93,13 +83,12 @@ public class DashboardTest extends BaseTest {
         
         String expectedRegionsPanelHeadingText = "Regions";
         String actualRegionsPanelHeadingText = regionsPage.getPanelHeadingText();
-        assertTrue("Failed - panel heading texts doesn't match", actualRegionsPanelHeadingText.contains(expectedRegionsPanelHeadingText));        
+        
+        assertTrue("Failed - panel heading texts doesn't match", actualRegionsPanelHeadingText.contains(expectedRegionsPanelHeadingText));  
     }
-    
     @Test
     public void testPortalsLink(){
-        
-        PortalsPage portalsPage = dashboardPage.clickOnPortalsNavLink();
+        PortalsPage portalsPage = signaturesPage.clickOnPortalsNavLink();
         
         String expectedUrl = "http://bvtest.school.cubes.rs/admin/portals";
         String actualUrl = driver.getCurrentUrl();
@@ -107,21 +96,15 @@ public class DashboardTest extends BaseTest {
         
         String expectedPortalsPanelHeadingText = "Portals";
         String actualPortalsPanelHeadingText = portalsPage.getPanelHeadingText();
+        
         assertTrue("Failed - panel heading texts doesn't match", actualPortalsPanelHeadingText.contains(expectedPortalsPanelHeadingText));
     }
-    
     @Test
     public void testSourcesLink(){
-        
-        SourcesPage sourcesPage = dashboardPage.clickOnSourcesNavLink();
+        SourcesPage sourcesPage = signaturesPage.clickOnSourcesNavLink();
         
         String expectedUrl = "http://bvtest.school.cubes.rs/admin/sources";
         String actualUrl = driver.getCurrentUrl();
         assertEquals("Url's doesnt' match", expectedUrl, actualUrl);
-        
     }
-        
-     
-    
-
 }

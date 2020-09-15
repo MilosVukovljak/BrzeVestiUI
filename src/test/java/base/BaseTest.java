@@ -10,15 +10,16 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import pages.LoginPage;
 
 public class BaseTest {
     
     protected static WebDriver driver;
+    protected static WebDriverWait wait;
     
     @BeforeClass
-    public static void setUpClass() throws IOException {
-        
-        
+    public static void setUpClass() throws IOException {        
         Configuration.init();
         System.setProperty("webdriver.chrome.driver", Configuration.chromeDriverPath);
         driver = new ChromeDriver();
@@ -26,6 +27,7 @@ public class BaseTest {
         driver.manage().window().maximize();
         //Go to login page
         driver.get("http://bvtest.school.cubes.rs/login");
+        wait = new WebDriverWait(driver, 2);
     }
     
     @AfterClass
