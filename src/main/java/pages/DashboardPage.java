@@ -53,7 +53,7 @@ public class DashboardPage {
    }
    public SourcesPage clickOnSourcesNavLink(){
        driver.findElement(sourcesLinkLocator).click();
-       return new SourcesPage(driver);
+       return new SourcesPage(driver, wait);
    }
    public String getPanelHeadingText(){
       return driver.findElement(panelHeading).getText();

@@ -11,6 +11,12 @@ public class PortalsPage {
     private final WebDriverWait wait; 
     
     private final By panelHeadingLocator = By.className("panel-heading");
+    private final By dashboardLinkLocator = By.xpath("//*[@id=\"app-navbar-collapse\"]/ul[1]/li[1]/a");
+    private final By signaturesLinkLocator = By.linkText("Signatures");
+    private final By categoriesLinkLocator = By.linkText("Categories");
+    private final By regionsLinkLocator = By.linkText("Regions");
+    private final By portalsLinkLocator = By.linkText("Portals");
+    private final By sourcesLinkLocator = By.linkText("Sources");
     private final By alertMessageLocator = By.className("alert-success");
     private final By addPortalLocator = By.className("pull-right");
     private final By portalTitleNameLocator = By.xpath("//*[@id=\"portalsTable\"]/tbody/tr[1]/td[3]");//pogledati
@@ -22,8 +28,7 @@ public class PortalsPage {
     private final By statusLetterLocator = By.xpath("//*[@id=\"portalsTable\"]/tbody/tr[1]/td[4]/span");
     private final By titleNameLocator = By.xpath("//*[@id=\"portalsTable\"]/tbody/tr[1]/td[3]");
     private final By deleteFirstPortalLocator = By.xpath("//*[@id=\"portalsTable\"]/tbody/tr[1]/td[5]/div/button[2]/span");
-    private final By deleteButtonLocator = By.xpath("//*[@id=\"portalDeleteDialog\"]/div/div/div[3]/button[2]");
-    private final By portalsLinkLocator = By.linkText("Portals"); 
+    private final By deleteButtonLocator = By.xpath("//*[@id=\"portalDeleteDialog\"]/div/div/div[3]/button[2]"); 
     private final By optionDropDownListLoctar = By.className("dropdown-toggle");
     private final By logoutButtonLocator = By.xpath("//*[@id=\"app-navbar-collapse\"]/ul[2]/li/ul/li/a");
 
@@ -36,6 +41,29 @@ public class PortalsPage {
     }
     public String getAlertMessageText(){
         return driver.findElement(alertMessageLocator).getText();
+    }
+    public DashboardPage clickOnDashboardNavLink(){
+        driver.findElement(dashboardLinkLocator).click();
+        return new DashboardPage(driver, wait);
+    }
+    public SignaturesPage clickOnSignaturesNavLink(){
+        driver.findElement(signaturesLinkLocator).click();
+        return new SignaturesPage(driver, wait);
+    }
+    public CategoriesPage clickOnCategoriesNavLink(){
+        driver.findElement(categoriesLinkLocator).click();
+        return new CategoriesPage(driver, wait);
+    }
+    public RegionsPage clickOnRegionsNavLink(){
+        driver.findElement(regionsLinkLocator).click();
+        return new RegionsPage(driver, wait);
+    }
+    public void clickOnPortalsNavLink(){
+        driver.findElement(portalsLinkLocator).click();
+    }
+    public SourcesPage clickOnSourcesNavLink(){
+        driver.findElement(sourcesLinkLocator).click();
+        return new SourcesPage(driver, wait);
     }
     public AddPortalsPage clickOnAddPortal(){
         driver.findElement(addPortalLocator).click();
@@ -71,9 +99,6 @@ public class PortalsPage {
     }
     public void clickOnDeleteButton(){
         wait.until(ExpectedConditions.elementToBeClickable(deleteButtonLocator)).click();
-    }
-    public void clickOnPortalsNavLink(){
-        driver.findElement(portalsLinkLocator).click();
     }
     public void clickOnDropDownList(){
         driver.findElement(optionDropDownListLoctar).click();

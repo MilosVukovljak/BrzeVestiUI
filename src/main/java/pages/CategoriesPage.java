@@ -89,7 +89,7 @@ public class CategoriesPage {
     }
     public SourcesPage clickOnSOurcesNavLink(){
         driver.findElement(sourcesLinkLocator).click();
-        return new SourcesPage(driver);
+        return new SourcesPage(driver, wait);
     }
     ////////////////////////////
     public void clickOnDisableIcon(){

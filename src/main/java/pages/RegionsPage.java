@@ -80,7 +80,7 @@ public class RegionsPage {
     
     public SourcesPage ClickOnSourcesNavLink(){
         driver.findElement(sourcesLinkLocator).click();
-        return new SourcesPage(driver);
+        return new SourcesPage(driver, wait);
     }
     public String getStatusLetter(){
         return driver.findElement(statusLetterLocator).getText();

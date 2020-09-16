@@ -31,8 +31,8 @@ public class AddPortalsPage {
     }
     
     public void selectFromPortalsDropdown(String regionName) {
-    Select portalsDropdown = new Select(driver.findElement(regionDropDown));
-    portalsDropdown.selectByVisibleText(regionName);
+        Select portalsDropdown = new Select(driver.findElement(regionDropDown));
+        portalsDropdown.selectByVisibleText(regionName);
     } 
     
     public void clickOnSaveButton(){
