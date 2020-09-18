@@ -2,6 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SourcesPage {
@@ -18,6 +19,14 @@ public class SourcesPage {
     private final By portalsLinkLocator = By.linkText("Portals");
     private final By sourcesLinkLocator = By.linkText("Sources");
     private final By addSourceButtonLocator = By.className("pull-right");
+    private final By editIconLocator = By.xpath("//*[@id=\"sourcesTable\"]/tbody/tr[1]/td[8]/div/a/span");
+    private final By statusLetterLocator = By.xpath("//*[@id=\"sourcesTable\"]/tbody/tr[1]/td[7]/span");
+    private final By disableEnableIconLocator = By.xpath("//*[@id=\"sourcesTable\"]/tbody/tr[1]/td[8]/div/button[1]/span");
+    private final By disableButtonLocator = By.xpath("//*[@id=\"sourceDisableDialog\"]/div/div/div[3]/button[2]");
+    private final By titleNameLocator = By.xpath("//*[@id=\"sourcesTable\"]/tbody/tr[1]/td[2]");
+    private final By enableButtonLocator = By.xpath("//*[@id=\"sourceEnableDialog\"]/div/div/div[3]/button[2]");
+    private final By deleteIconLocator = By.xpath("//*[@id=\"sourcesTable\"]/tbody/tr[1]/td[8]/div/button[2]/span");
+    private final By deleteButtonLocator = By.xpath("//*[@id=\"sourceDeleteDialog\"]/div/div/div[3]/button[2]");
     
     
     public SourcesPage(WebDriver driver, WebDriverWait wait) {
@@ -64,5 +73,30 @@ public class SourcesPage {
     public AddSourcePage clickOnAddSourceButton(){
         driver.findElement(addSourceButtonLocator).click();
         return new AddSourcePage(driver, wait);
+    }
+    public SourcesEditPage clickOnFirstEditIcon(){
+        driver.findElement(editIconLocator).click();
+        return new SourcesEditPage(driver, wait);
+    }
+    public String getStatusLetter(){
+        return driver.findElement(statusLetterLocator).getText();
+    }
+    public void clickOnDisableEnableIcon(){
+        driver.findElement(disableEnableIconLocator).click();
+    }
+    public void clickOnDisableButton(){
+        wait.until(ExpectedConditions.elementToBeClickable(disableButtonLocator)).click();
+    }
+    public String getTitleName(){
+        return driver.findElement(titleNameLocator).getText();
+    }
+    public void clickOnEnableButton(){
+        wait.until(ExpectedConditions.elementToBeClickable(enableButtonLocator)).click();
+    }
+    public void clickOnDeleteIcon(){
+        driver.findElement(deleteIconLocator).click();
+    }
+    public void clickOnDeleteButton(){
+        wait.until(ExpectedConditions.elementToBeClickable(deleteButtonLocator)).click();
     }
 }

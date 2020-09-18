@@ -13,6 +13,6 @@ public class Helper {
         return "example" + getRandomInteger() + "@gmail.com";
     }
     public static String getRandomUrl(){
-        return "www" + getRandomText() + ".com";
+        return "https://www" + getRandomText() + ".com";
     }
 }

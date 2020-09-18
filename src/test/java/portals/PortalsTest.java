@@ -152,7 +152,7 @@ public class PortalsTest extends BaseTest{
     public void TestDisableFirstPortal(){
         
         String startingStatus = portalsPage.getStatusLetter();
-        Assume.assumeTrue("Preconditions is not met, category is already disabled", startingStatus.equals("E"));
+        Assume.assumeTrue("Preconditions is not met, portal is already disabled", startingStatus.equals("E"));
 
         portalsPage.clickOnDisableIcon();
         portalsPage.clickOnDisableButton();

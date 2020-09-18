@@ -2,28 +2,25 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class AddSourcePage {
-    private WebDriver driver;
-    private WebDriverWait wait;
+public class SourcesEditPage {
+    private final WebDriver driver;
+    private final WebDriverWait wait;
     
-    
-    private final By portalDropDownListLocator = By.id("sourcePortalSelect");
-    private final By optionNameOfPortalDropdownList = By.xpath("//*[@id=\"sourcePortalSelect\"]/option[3]");
+    private final By portalDropDownListLocator = By.id("sourcePortalSelect"); 
+    private final By optionNameOfPortalDropdownList = By.xpath("//*[@id=\"sourcePortalSelect\"]/option[7]");
     private final By titleFieldLocator = By.id("sourceTitleText");
     private final By urlFieldLocator = By.id("sourceUrlText");
     private final By sourceTypeFieldLocator = By.id("sourceNewsFetcherSelect");
     private final By sourceTypeNameLocator = By.xpath("//*[@id=\"sourceNewsFetcherSelect\"]/option");
     private final By sourceProcessorFieldLocator = By.id("sourceNewsProcessorSelect");
-    private final By sourceProcessorNameLocator = By.xpath("//*[@id=\"sourceNewsProcessorSelect\"]/option[3]");
-    private final By firstSourceProcessorNameLocator = By.xpath("//*[@id=\"sourceNewsProcessorSelect\"]/option[1]");
-    private final By sourceCategoryFieldLocator = By.id("sourceCategorySelect");
-    private final By sourceCategoryNameLocator = By.xpath("//*[@id=\"sourceCategorySelect\"]/option[3]");
+    private final By sourceProcessorNameLocator = By.xpath("//*[@id=\"sourceNewsProcessorSelect\"]/option[2]");
     private final By saveButtonLocator = By.id("save-source-button");
 
-    public AddSourcePage(WebDriver driver, WebDriverWait wait) {
+    public SourcesEditPage(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
         this.wait = wait;
     }
@@ -34,13 +31,17 @@ public class AddSourcePage {
     }
     public String getOptionDropDownName(){
         return driver.findElement(optionNameOfPortalDropdownList).getText();
-    }
+    } 
     public void enterTitleName(String newTitle){
-        driver.findElement(titleFieldLocator).sendKeys(newTitle);
+        WebElement titleField = driver.findElement(titleFieldLocator);
+        titleField.clear();
+        titleField.sendKeys(newTitle);       
     }
     public void enterUrl(String newUrl){
-        driver.findElement(urlFieldLocator).sendKeys(newUrl);
-    }
+        WebElement urlField = driver.findElement(urlFieldLocator);
+        urlField.clear();
+        urlField.sendKeys(newUrl);        
+    } 
     public void selectSourceType(String sourceType){
         Select sourceTypeList = new Select(driver.findElement(sourceTypeFieldLocator));
         sourceTypeList.selectByVisibleText(sourceType);
@@ -54,16 +55,6 @@ public class AddSourcePage {
     }
     public String getSourceProcessorName(){
         return driver.findElement(sourceProcessorNameLocator).getText();
-    }
-    public String getFirstSourceProcessorName(){
-        return driver.findElement(firstSourceProcessorNameLocator).getText();
-    }
-    public void selectSourceCategory(String sourceCategory){
-        Select sourceCategoryList = new Select(driver.findElement(sourceCategoryFieldLocator));
-        sourceCategoryList.selectByVisibleText(sourceCategory);
-    }
-    public String getSourceCategoryName(){
-        return driver.findElement(sourceCategoryNameLocator).getText();
     }
     public void clickOnSaveButton(){
         driver.findElement(saveButtonLocator).click();

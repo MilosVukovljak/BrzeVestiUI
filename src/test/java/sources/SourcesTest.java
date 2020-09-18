@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Assume;
 import pages.AddSourcePage;
 import pages.CategoriesPage;
 import pages.DashboardPage;
@@ -15,6 +16,7 @@ import pages.LoginPage;
 import pages.PortalsPage;
 import pages.RegionsPage;
 import pages.SignaturesPage;
+import pages.SourcesEditPage;
 import pages.SourcesPage;
 
 public class SourcesTest extends BaseTest {
@@ -124,5 +126,120 @@ public class SourcesTest extends BaseTest {
         String sourceProcessorName = addSourcePage.getSourceProcessorName();
         addSourcePage.selectSourceProcessor(sourceProcessorName);
         addSourcePage.clickOnSaveButton();
+        
+        String expectedUrl = "http://bvtest.school.cubes.rs/admin/sources";
+        String actualUrl = driver.getCurrentUrl();
+        assertEquals("Url's doesn't match", expectedUrl, actualUrl);
+        
+        String expectedMessage = "Source \"" + newTitle + "\" has been successfully saved!";
+        String actualMessage = sourcesPage.getAlertMessageText();
+        assertTrue("Failed - wrong alert message", expectedMessage.equals(actualMessage));
+    }
+    @Test
+    public void TestAddSourceSecondWay(){
+        AddSourcePage addSourcePage = sourcesPage.clickOnAddSourceButton();
+        String optionName = addSourcePage.getOptionDropDownName();
+        addSourcePage.selectPortalFromDropDownList(optionName);
+        String newTitle = Helper.getRandomText();
+        addSourcePage.enterTitleName(newTitle);
+        String newUrl = Helper.getRandomUrl();
+        addSourcePage.enterUrl(newUrl);
+        String sourceTypeName = addSourcePage.getSourceTypeName();
+        addSourcePage.selectSourceType(sourceTypeName);
+        String firstProcessorName = addSourcePage.getFirstSourceProcessorName();
+        addSourcePage.selectSourceProcessor(firstProcessorName);
+        String categoryName = addSourcePage.getSourceCategoryName();
+        addSourcePage.selectSourceCategory(categoryName);
+        addSourcePage.clickOnSaveButton();
+        
+        String expectedUrl = "http://bvtest.school.cubes.rs/admin/sources";
+        String actualUrl = driver.getCurrentUrl();
+        assertEquals("Url's doesn't match", expectedUrl, actualUrl);
+        
+        String expectedMessage = "Source \"" + newTitle + "\" has been successfully saved!";
+        String actualMessage = sourcesPage.getAlertMessageText();
+        assertTrue("Failed - wrong alert message", expectedMessage.equals(actualMessage));
+    }
+    @Test
+    public void TestEditFirstSource(){
+        SourcesEditPage sourceEditPage = sourcesPage.clickOnFirstEditIcon();
+        String portalName = sourceEditPage.getOptionDropDownName();
+        sourceEditPage.selectPortalFromDropDownList(portalName);
+        String newTitle = Helper.getRandomText();
+        sourceEditPage.enterTitleName(newTitle);
+        String newUrl = Helper.getRandomUrl();
+        sourceEditPage.enterUrl(newUrl);
+        String sourceTypeName = sourceEditPage.getSourceTypeName();
+        sourceEditPage.selectSourceType(sourceTypeName);
+        String sourceProcessorName = sourceEditPage.getSourceProcessorName();
+        sourceEditPage.selectSourceProcessor(sourceProcessorName);
+        sourceEditPage.clickOnSaveButton();
+        
+        String expectedUrl = "http://bvtest.school.cubes.rs/admin/sources";
+        String actualUrl = driver.getCurrentUrl();
+        assertEquals("Url's doesn't match", expectedUrl, actualUrl);
+        
+        String expectedMessage = "Source \"" + newTitle + "\" has been successfully saved!";
+        String actualMessage = sourcesPage.getAlertMessageText();
+        assertTrue("Failed - wrong alert message", expectedMessage.equals(actualMessage));
+    }
+    @Test
+    public void TestDisableFirstSource(){
+        String startingStatus = sourcesPage.getStatusLetter();
+        Assume.assumeTrue("Precondition is not met, source is already disabled", startingStatus.equals("E"));
+        
+        sourcesPage.clickOnDisableEnableIcon();
+        sourcesPage.clickOnDisableButton();
+        
+        String expectedUrl = "http://bvtest.school.cubes.rs/admin/sources";
+        String actualUrl = driver.getCurrentUrl();
+        assertEquals("Url's doesn't match", expectedUrl, actualUrl);
+        
+        String titleName = sourcesPage.getTitleName();
+        String expectedMessage = "Source \"" + titleName + "\" has been disabled";
+        String actualMessage = sourcesPage.getAlertMessageText();
+        assertTrue("Failed - wrong alert message", expectedMessage.equals(actualMessage));
+        
+        String expectedStatusLetter = "D";
+        String actualStatusLetter = sourcesPage.getStatusLetter();
+        assertTrue("Failed - status letter hasn't changed", expectedStatusLetter.equals(actualStatusLetter));
+    }
+    @Test 
+    public void TestEnableFirstSource(){
+        String startingStatus = sourcesPage.getStatusLetter();
+        Assume.assumeTrue("Precondition is not met, source is already enabled", startingStatus.equals("D"));
+        
+        sourcesPage.clickOnDisableEnableIcon();
+        sourcesPage.clickOnEnableButton();
+        
+        String expectedUrl = "http://bvtest.school.cubes.rs/admin/sources";
+        String actualUrl = driver.getCurrentUrl();
+        assertEquals("Url's doesn't match", expectedUrl, actualUrl);
+        
+        String titleName = sourcesPage.getTitleName();
+        String expectedMessage = "Source \"" + titleName + "\" has been enabled";
+        String actualMessage = sourcesPage.getAlertMessageText();
+        assertTrue("Failed - wrong alert message", expectedMessage.equals(actualMessage));
+        
+        String expectedStatusLetter = "E";
+        String actualStatusLetter = sourcesPage.getStatusLetter();
+        assertTrue("Failed - status letter hasn't changed", expectedStatusLetter.equals(actualStatusLetter));
+    }
+    @Test
+    public void TestDeleteFirstSource(){
+        String titleName = sourcesPage.getTitleName();
+        sourcesPage.clickOnDeleteIcon();
+        sourcesPage.clickOnDeleteButton();
+        
+        String expectedUrl = "http://bvtest.school.cubes.rs/admin/sources";
+        String actualUrl = driver.getCurrentUrl();
+        assertEquals("Url's doesn't match", expectedUrl, actualUrl);
+        
+        String expectedMessage = "Source \"" + titleName + "\" has been successfully deleted!";
+        String actualMessage = sourcesPage.getAlertMessageText();
+        assertTrue("Failed - wrong alert message", expectedMessage.equals(actualMessage));
+        
+        
+        
     }
 }
