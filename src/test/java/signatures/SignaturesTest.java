@@ -4,6 +4,7 @@ import base.BaseTest;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import pages.CategoriesPage;
@@ -107,4 +108,92 @@ public class SignaturesTest extends BaseTest{
         String actualUrl = driver.getCurrentUrl();
         assertEquals("Url's doesnt' match", expectedUrl, actualUrl);
     }
+    @Test
+    public void testChangeCategory(){
+        signaturesPage.clickOnChangeCategoryIcon();
+        String categoryOptionName = signaturesPage.getSelectedCategoryName();
+        signaturesPage.selectCategory(categoryOptionName);
+        signaturesPage.clickOnApproveButton();
+        String signatureName = signaturesPage.getSignatureName();
+        String categoryName = signaturesPage.getCategoryName();
+        
+        String expectedUrl = "http://bvtest.school.cubes.rs/admin/signatures";
+        String actualUrl = driver.getCurrentUrl();
+        assertEquals("Url's doesnt' match", expectedUrl, actualUrl);
+        
+        String expectedAlertMessage = "News processor signature \"" + signatureName + "\" has been approved with category \"" + categoryName + "\"";
+        String actualAlertMessage = signaturesPage.getAlertMessage();
+        assertTrue("Failed - wrong alert message", expectedAlertMessage.equals(actualAlertMessage));
+    }
+    @Test
+    public void testIgnoreSignature(){
+        String startingStatusLetter = signaturesPage.getStatusLetter();
+        Assume.assumeTrue("Preconditions is not met, category is already disabled", startingStatusLetter.equals("A"));
+        
+        signaturesPage.clickOnIgonreIcon();
+        signaturesPage.clickOnIgnoreButton();
+        String signatureName = signaturesPage.getSignatureName();
+        
+        String expectedUrl = "http://bvtest.school.cubes.rs/admin/signatures";
+        String actualUrl = driver.getCurrentUrl();
+        assertEquals("Url's doesnt' match", expectedUrl, actualUrl);
+        
+        String expectedAlertMessage = "Status of news processor signature \"" + signatureName + "\" has been set to IGNORE";
+        String actualAlertMessage = signaturesPage.getAlertMessage();
+        assertTrue("Failed - wrong alert message", expectedAlertMessage.equals(actualAlertMessage));
+        
+        String expectedStatusCharacter = "I";
+        String actualStatusCharacter = signaturesPage.getStatusLetter();
+        assertTrue("Failed - status letter hasn't changed", expectedStatusCharacter.equals(actualStatusCharacter));
+    }
+    @Test 
+    public void testApproveSignature(){
+        String startingStatusLetter = signaturesPage.getStatusLetter();
+        Assume.assumeTrue("Preconditions is not met, category is already disabled", startingStatusLetter.equals("I"));
+        
+        signaturesPage.clickOnApproveIcon();
+        signaturesPage.clickOnApproveButton();
+        String signatureName = signaturesPage.getSignatureName();
+        String categoryName = signaturesPage.getCategoryName();
+        
+        String expectedUrl = "http://bvtest.school.cubes.rs/admin/signatures";
+        String actualUrl = driver.getCurrentUrl();
+        assertEquals("Url's doesnt' match", expectedUrl, actualUrl);
+        
+        String expectedAlertMessage = "News processor signature \"" + signatureName + "\" has been approved with category \"" + categoryName + "\"";
+        String actualAlertMessage = signaturesPage.getAlertMessage();
+        assertTrue("Failed - wrong alert message", expectedAlertMessage.equals(actualAlertMessage));
+        
+        String expectedStatusCharacter = "A";
+        String actualStatusCharacter = signaturesPage.getStatusLetter();
+        assertTrue("Failed - status letter hasn't changed", expectedStatusCharacter.equals(actualStatusCharacter));
+    }
+    @Test
+    public void testDeleteSignature(){
+        String signatureName = signaturesPage.getSignatureName();
+        signaturesPage.clickOnDeleteIcon();
+        signaturesPage.clickOnDeleteButton();
+        
+        String expectedUrl = "http://bvtest.school.cubes.rs/admin/signatures";
+        String actualUrl = driver.getCurrentUrl();
+        assertEquals("Url's doesnt' match", expectedUrl, actualUrl);
+        
+        String expectedAlertMessage = "News processor signature \"" + signatureName + "\" has been successfully deleted!";
+        String actualAlertMessage = signaturesPage.getAlertMessage();
+        assertTrue("Failed - wrong alert message", expectedAlertMessage.equals(actualAlertMessage));
+    }
+    @Test
+    public void testPortalsSortList(){
+        String portalName = signaturesPage.getPortalName();
+        signaturesPage.selectPortal(portalName);
+        
+        String expectedUrl = "http://bvtest.school.cubes.rs/admin/signatures";
+        String actualUrl = driver.getCurrentUrl();
+        assertEquals("Url's doesnt' match", expectedUrl, actualUrl);
+        
+       // String expectedSortedPortalNames = portalName;
+      //  String actualSortedPortalNames = signaturesPage.getSortedPortalName();
+       // assertTrue("Failed - wrong alert message", expectedSortedPortalNames.equals(actualSortedPortalNames));
+    }
+    
 }

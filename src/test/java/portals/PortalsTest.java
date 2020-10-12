@@ -116,7 +116,7 @@ public class PortalsTest extends BaseTest{
     public void TestAddNewPortal(){
         AddPortalsPage addPortalPage = portalsPage.clickOnAddPortal();
         String newTitle = Helper.getRandomText();
-        addPortalPage.enterTitleName(newTitle);        
+        addPortalPage.enterTitleName(newTitle); 
         addPortalPage.enterUrl();
         String optionName = addPortalPage.getOptionDropDownName();
         addPortalPage.selectFromPortalsDropdown(optionName);

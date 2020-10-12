@@ -237,9 +237,19 @@ public class SourcesTest extends BaseTest {
         
         String expectedMessage = "Source \"" + titleName + "\" has been successfully deleted!";
         String actualMessage = sourcesPage.getAlertMessageText();
-        assertTrue("Failed - wrong alert message", expectedMessage.equals(actualMessage));
+        assertTrue("Failed - wrong alert message", expectedMessage.equals(actualMessage));  
+    }
+    @Test
+    public void TestPortalsSortList(){
+        String portalName = sourcesPage.getSelectedPortalName();
+        sourcesPage.selectSortOfPortals(portalName);
         
+        String expectedUrl = "http://bvtest.school.cubes.rs/admin/sources";
+        String actualUrl = driver.getCurrentUrl();
+        assertEquals("Url's doesn't match", expectedUrl, actualUrl);
         
-        
+        String selectedPortalName = "Informer";
+        String sortedPortalName = sourcesPage.getPortalName();
+        assertTrue("Failed - portal's name doesn't match", sortedPortalName.contains(selectedPortalName));
     }
 }

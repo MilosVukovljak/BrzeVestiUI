@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SourcesPage {
@@ -27,6 +28,9 @@ public class SourcesPage {
     private final By enableButtonLocator = By.xpath("//*[@id=\"sourceEnableDialog\"]/div/div/div[3]/button[2]");
     private final By deleteIconLocator = By.xpath("//*[@id=\"sourcesTable\"]/tbody/tr[1]/td[8]/div/button[2]/span");
     private final By deleteButtonLocator = By.xpath("//*[@id=\"sourceDeleteDialog\"]/div/div/div[3]/button[2]");
+    private final By portalSortField = By.id("sourcePortalSelect");
+    private final By portalDropDownNameLocator = By.xpath("//*[@id=\"sourcePortalSelect\"]/option[4]");
+    private final By portalNameLocator = By.xpath("//*[@id=\"sourcesTable\"]/tbody/tr[1]/td[1]");
     
     
     public SourcesPage(WebDriver driver, WebDriverWait wait) {
@@ -98,5 +102,15 @@ public class SourcesPage {
     }
     public void clickOnDeleteButton(){
         wait.until(ExpectedConditions.elementToBeClickable(deleteButtonLocator)).click();
+    }
+    public void selectSortOfPortals(String portalName){
+        Select portalsNameList = new Select(driver.findElement(portalSortField));
+        portalsNameList.selectByVisibleText(portalName);
+    }
+    public String getSelectedPortalName(){
+        return driver.findElement(portalDropDownNameLocator).getText();
+    }
+    public String getPortalName(){
+        return driver.findElement(portalNameLocator).getText();
     }
 }
